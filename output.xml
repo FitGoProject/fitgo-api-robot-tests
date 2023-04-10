@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.10.10 on darwin)" generated="20230410 02:25:15.191" rpa="false" schemaversion="3">
+<suite id="s1" name="User Management Tests" source="/Users/daniloorrego/Documents/Danilo/fitgo-api-robot-tests/user_management_tests.robot">
+<kw name="Create Sessions" library="resources" type="SETUP">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>FitGoAPI</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230410 02:25:15.568" level="INFO">Creating Session using : alias=FitGoAPI, url=https://fit-go-api.onrender.com/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230410 02:25:15.567" endtime="20230410 02:25:15.571"/>
+</kw>
+<status status="PASS" starttime="20230410 02:25:15.566" endtime="20230410 02:25:15.571"/>
+</kw>
+<test id="s1-t1" name="Test User Registration With Valid Data" line="12">
+<kw name="Generate Random String" library="String">
+<var>${random_username}</var>
+<arg>10</arg>
+<arg>[LETTERS][NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230410 02:25:15.573" level="INFO">${random_username} = Vq35ZQRh0M</msg>
+<status status="PASS" starttime="20230410 02:25:15.572" endtime="20230410 02:25:15.574"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${email}</var>
+<arg>${random_username}</arg>
+<arg>@email.com</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20230410 02:25:15.576" level="INFO">${email} = Vq35ZQRh0M @email.com</msg>
+<status status="PASS" starttime="20230410 02:25:15.575" endtime="20230410 02:25:15.576"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${EMAIL}</arg>
+<arg>${email}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230410 02:25:15.581" level="INFO">${EMAIL} = Vq35ZQRh0M @email.com</msg>
+<status status="PASS" starttime="20230410 02:25:15.578" endtime="20230410 02:25:15.581"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${PASSWORD}</arg>
+<arg>securePass123</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230410 02:25:15.583" level="INFO">${PASSWORD} = securePass123</msg>
+<status status="PASS" starttime="20230410 02:25:15.582" endtime="20230410 02:25:15.584"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>name=John</arg>
+<arg>lastName=Doe</arg>
+<arg>email=${email}</arg>
+<arg>password=${PASSWORD}</arg>
+<arg>phone=1234567890</arg>
+<arg>personalId=987654321</arg>
+<arg>roles=["user"]</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:15.587" level="INFO">&amp;{data} = { name=John | lastName=Doe | email=Vq35ZQRh0M @email.com | password=securePass123 | phone=1234567890 | personalId=987654321 | roles=["user"] }</msg>
+<status status="PASS" starttime="20230410 02:25:15.584" endtime="20230410 02:25:15.588"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${REGISTER_ENDPOINT}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:16.585" level="INFO">POST Request : url=https://fit-go-api.onrender.com/api/users/register 
+ path_url=/api/users/register 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '171', 'Content-Type': 'application/json'} 
+ body=b'{"name": "John", "lastName": "Doe", "email": "Vq35ZQRh0M @email.com", "password": "securePass123", "phone": "1234567890", "personalId": "987654321", "roles": "[\\"user\\"]"}' 
+ </msg>
+<msg timestamp="20230410 02:25:16.585" level="INFO">POST Response : url=https://fit-go-api.onrender.com/api/users/register 
+ status=201, reason=Created 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:16 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '278', 'Connection': 'keep-alive', 'CF-Ray': '7b589176fc530de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"159-UX1eX/0YDdebSwCv8bCEwbbkces"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body={"name":"John","lastName":"Doe","email":"Vq35ZQRh0M @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$nG0B56qA.m7Oe1jYZnn6.eGTLeaz3XZCbMIbcDftizIrrMdAJmCaK","roles":["[\"user\"]"],"_id":"64339dbc64fb07d0ed61111c","subscriptions":[],"createdAt":"2023-04-10T05:25:16.531Z","updatedAt":"2023-04-10T05:25:16.531Z","__v":0} 
+ </msg>
+<msg timestamp="20230410 02:25:16.586" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:16.586" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:15.589" endtime="20230410 02:25:16.587"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230410 02:25:16.589" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:16.587" endtime="20230410 02:25:16.590"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230410 02:25:16.592" level="INFO">${json} = {'name': 'John', 'lastName': 'Doe', 'email': 'Vq35ZQRh0M @email.com', 'phone': '1234567890', 'personalId': '987654321', 'password': '$2a$08$nG0B56qA.m7Oe1jYZnn6.eGTLeaz3XZCbMIbcDftizIrrMdAJmCaK', 'rol...</msg>
+<status status="PASS" starttime="20230410 02:25:16.590" endtime="20230410 02:25:16.592"/>
+</kw>
+<tag>POST</tag>
+<status status="PASS" starttime="20230410 02:25:15.571" endtime="20230410 02:25:16.592"/>
+</test>
+<test id="s1-t2" name="Test User Registration With Invalid Data" line="24">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>name=</arg>
+<arg>lastName=</arg>
+<arg>email=</arg>
+<arg>password=</arg>
+<arg>phone=</arg>
+<arg>personalId=</arg>
+<arg>roles=[]</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:16.597" level="INFO">&amp;{data} = { name= | lastName= | email= | password= | phone= | personalId= | roles=[] }</msg>
+<status status="PASS" starttime="20230410 02:25:16.596" endtime="20230410 02:25:16.597"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${REGISTER_ENDPOINT}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:16.878" level="INFO">POST Request : url=https://fit-go-api.onrender.com/api/users/register 
+ path_url=/api/users/register 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '103', 'Content-Type': 'application/json'} 
+ body=b'{"name": "", "lastName": "", "email": "", "password": "", "phone": "", "personalId": "", "roles": "[]"}' 
+ </msg>
+<msg timestamp="20230410 02:25:16.879" level="INFO">POST Response : url=https://fit-go-api.onrender.com/api/users/register 
+ status=500, reason=Internal Server Error 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:17 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '141', 'Connection': 'keep-alive', 'CF-Ray': '7b58917c2a700de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"102-H8gqDChHIQc3MM31ucNG430RPzI"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body={"error":"User validation failed: name: Path `name` is required., lastName: Path `lastName` is required., email: Path `email` is required., phone: Path `phone` is required., personalId: Path `personalId` is required., password: Path `password` is required."} 
+ </msg>
+<msg timestamp="20230410 02:25:16.879" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:16.880" level="FAIL">HTTPError: 500 Server Error: Internal Server Error for url: https://fit-go-api.onrender.com/api/users/register</msg>
+<status status="FAIL" starttime="20230410 02:25:16.598" endtime="20230410 02:25:16.892"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230410 02:25:16.893" endtime="20230410 02:25:16.893"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230410 02:25:16.894" endtime="20230410 02:25:16.894"/>
+</kw>
+<tag>POST</tag>
+<status status="FAIL" starttime="20230410 02:25:16.595" endtime="20230410 02:25:16.895">HTTPError: 500 Server Error: Internal Server Error for url: https://fit-go-api.onrender.com/api/users/register</status>
+</test>
+<test id="s1-t3" name="Test User Login With Valid Credentials" line="32">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:16.898" level="INFO">&amp;{data} = { email=Vq35ZQRh0M @email.com | password=securePass123 }</msg>
+<status status="PASS" starttime="20230410 02:25:16.898" endtime="20230410 02:25:16.899"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${LOGIN_ENDPOINT}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:17.285" level="INFO">POST Request : url=https://fit-go-api.onrender.com/api/users/login 
+ path_url=/api/users/login 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '63', 'Content-Type': 'application/json'} 
+ body=b'{"email": "Vq35ZQRh0M @email.com", "password": "securePass123"}' 
+ </msg>
+<msg timestamp="20230410 02:25:17.286" level="INFO">POST Response : url=https://fit-go-api.onrender.com/api/users/login 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:17 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '438', 'Connection': 'keep-alive', 'CF-Ray': '7b58917e0c9c0de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"225-dJDh7ecshYGYty30o4DtOISdqR0"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body={"user":{"_id":"64339dbc64fb07d0ed61111c","name":"John","lastName":"Doe","email":"Vq35ZQRh0M @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$nG0B56qA.m7Oe1jYZnn6.eGTLeaz3XZCbMIbcDftizIrrMdAJmCaK","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:25:16.531Z","updatedAt":"2023-04-10T05:25:16.531Z","__v":0},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynztHzcunft_fY"} 
+ </msg>
+<msg timestamp="20230410 02:25:17.287" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:17.288" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:16.900" endtime="20230410 02:25:17.288"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230410 02:25:17.293" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:17.289" endtime="20230410 02:25:17.293"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230410 02:25:17.297" level="INFO">${json} = {'user': {'_id': '64339dbc64fb07d0ed61111c', 'name': 'John', 'lastName': 'Doe', 'email': 'Vq35ZQRh0M @email.com', 'phone': '1234567890', 'personalId': '987654321', 'password': '$2a$08$nG0B56qA.m7Oe1jY...</msg>
+<status status="PASS" starttime="20230410 02:25:17.295" endtime="20230410 02:25:17.297"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${token}</var>
+<arg>${json}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230410 02:25:17.300" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynztHzcunft_fY</msg>
+<status status="PASS" starttime="20230410 02:25:17.298" endtime="20230410 02:25:17.300"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${TOKEN}</arg>
+<arg>${token}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230410 02:25:17.303" level="INFO">${TOKEN} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynztHzcunft_fY</msg>
+<status status="PASS" starttime="20230410 02:25:17.301" endtime="20230410 02:25:17.303"/>
+</kw>
+<tag>POST</tag>
+<status status="PASS" starttime="20230410 02:25:16.896" endtime="20230410 02:25:17.304"/>
+</test>
+<test id="s1-t4" name="Test User Login With Invalid Credentials" line="42">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=wrongPass</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:17.308" level="INFO">&amp;{data} = { email=Vq35ZQRh0M @email.com | password=wrongPass }</msg>
+<status status="PASS" starttime="20230410 02:25:17.307" endtime="20230410 02:25:17.308"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${LOGIN_ENDPOINT}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:18.179" level="INFO">POST Request : url=https://fit-go-api.onrender.com/api/users/login 
+ path_url=/api/users/login 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '59', 'Content-Type': 'application/json'} 
+ body=b'{"email": "Vq35ZQRh0M @email.com", "password": "wrongPass"}' 
+ </msg>
+<msg timestamp="20230410 02:25:18.180" level="INFO">POST Response : url=https://fit-go-api.onrender.com/api/users/login 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:18 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '61', 'Connection': 'keep-alive', 'CF-Ray': '7b589180cfe40de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"25-3YG4LRpklFolV4uVOnUIRm2hZA0"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body={"error":"Invalid email or password"} 
+ </msg>
+<msg timestamp="20230410 02:25:18.180" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:18.181" level="FAIL">HTTPError: 400 Client Error: Bad Request for url: https://fit-go-api.onrender.com/api/users/login</msg>
+<status status="FAIL" starttime="20230410 02:25:17.309" endtime="20230410 02:25:18.183"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20230410 02:25:18.184" endtime="20230410 02:25:18.185"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230410 02:25:18.186" endtime="20230410 02:25:18.187"/>
+</kw>
+<tag>POST</tag>
+<status status="FAIL" starttime="20230410 02:25:17.305" endtime="20230410 02:25:18.188">HTTPError: 400 Client Error: Bad Request for url: https://fit-go-api.onrender.com/api/users/login</status>
+</test>
+<test id="s1-t5" name="Test Get All Users" line="50">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:18.194" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynzt...</msg>
+<status status="PASS" starttime="20230410 02:25:18.192" endtime="20230410 02:25:18.194"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${USERS_ENDPOINT}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:18.499" level="INFO">GET Request : url=https://fit-go-api.onrender.com/api/users 
+ path_url=/api/users 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynztHzcunft_fY'} 
+ body=None 
+ </msg>
+<msg timestamp="20230410 02:25:18.500" level="INFO">GET Response : url=https://fit-go-api.onrender.com/api/users 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:18 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '1153', 'Connection': 'keep-alive', 'CF-Ray': '7b5891861e560de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"102b-DDDZlDlpMblpD8i1y3EZ2/HfmK0"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body=[{"_id":"64339332defd2dd3121a983d","name":"Test","lastName":"User","email":"test2@mail.com","phone":"888888888","personalId":"987654322","password":"$2a$08$.eJ0m6HpWX4NLKgT8NMBsuqy3XliYbHtgClZjCNfb627kG0Ta/5KC","roles":["user"],"subscriptions":[],"createdAt":"2023-04-10T04:40:18.533Z","updatedAt":"2023-04-10T04:40:18.533Z","__v":0},{"_id":"6433971a64fb07d0ed6110dc","name":"John","lastName":"Doe","email":"qIffTtx9sc @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$vsZdNvfuKu/Hrqy3o/AZj.6mur3enDaFnZqxP6FCH0IQWWQNMZFWK","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T04:56:58.879Z","updatedAt":"2023-04-10T04:56:58.879Z","__v":0},{"_id":"6433987264fb07d0ed6110de","name":"John","lastName":"Doe","email":"1RkYuKAEIQ @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$ptk4g2xkB0es5zGr4.YV7ObbAHUi8lJxbVioWWe2NdGRrbQ4/JB.S","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:02:42.896Z","updatedAt":"2023-04-10T05:02:42.896Z","__v":0},{"_id":"643398ac64fb07d0ed6110e6","name":"John","lastName":"Doe","email":"NHHkES5vIR @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$Vnof2QrifVy.mFJVjJqE3u9rJjV41mavngSqNmImZncBeAG111JuO","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:03:40.814Z","updatedAt":"2023-04-10T05:03:40.814Z","__v":0},{"_id":"6433990e64fb07d0ed6110ec","name":"John","lastName":"Doe","email":"CxJKyNASP4 @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$smnugbIRL8kgCprePg//6ePkxgRgQsYcdkH7.qiEGAQIJBcXyjiGC","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:05:18.430Z","updatedAt":"2023-04-10T05:05:18.430Z","__v":0},{"_id":"6433996264fb07d0ed6110f2","name":"John","lastName":"Doe","email":"yXysLYt6ha @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$cWPdTA8864DgJx7lzsU84Oy4mlWZRC5XrbkETRrKKbZxzb6spTX7i","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:06:42.239Z","updatedAt":"2023-04-10T05:06:42.239Z","__v":0},{"_id":"6433998a64fb07d0ed6110f9","name":"John","lastName":"Doe","email":"LhvJr4Egw3 @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$kV/yXtfxkpg0h1lbOXGe7uh.3/.XvM8UEf3sY7Qv/QD0YDxALkewu","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:07:22.606Z","updatedAt":"2023-04-10T05:07:22.606Z","__v":0},{"_id":"64339a1d64fb07d0ed611100","name":"John","lastName":"Doe","email":"CqsukvcKww @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$3hi4GUlFqGrEebYOoWU.RuXN4xHWeIKsVIYtTjGpO/tq/BlBxbStO","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:09:49.568Z","updatedAt":"2023-04-10T05:09:49.568Z","__v":0},{"_id":"64339bba64fb07d0ed611109","name":"John","lastName":"Doe","email":"UaGLowrLwa @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$Ly4D82anU9rH2qC1tyw26uSjIAktxO1dgtoVSZmDYnR8GJ16qcRu6","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:16:42.150Z","updatedAt":"2023-04-10T05:16:42.150Z","__v":0},{"_id":"64339c9f64fb07d0ed611112","name":"John","lastName":"Doe","email":"iJccofOyeN@email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$KjO0cduC3FgNDr1BH6Z.yuK0tkxCOa1poIPRlO2jFqX7z5v32OH7e","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:20:31.172Z","updatedAt":"2023-04-10T05:20:31.172Z","__v":0},{"_id":"64339cc464fb07d0ed611117","name":"John","lastName":"Doe","email":"k7N4uofgDg @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$U3DrP/cYN4064xrlHAy/KOXBWjUXL5rv8XyYV86YiIU3e6bLLPLhu","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:21:08.986Z","updatedAt":"2023-04-10T05:21:08.986Z","__v":0},{"_id":"64339dbc64fb07d0ed61111c","name":"John","lastName":"Doe","email":"Vq35ZQRh0M @email.com","phone":"1234567890","personalId":"987654321","password":"$2a$08$nG0B56qA.m7Oe1jYZnn6.eGTLeaz3XZCbMIbcDftizIrrMdAJmCaK","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T05:25:16.531Z","updatedAt":"2023-04-10T05:25:16.531Z","__v":0}] 
+ </msg>
+<msg timestamp="20230410 02:25:18.500" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:18.501" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:18.195" endtime="20230410 02:25:18.501"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230410 02:25:18.504" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:18.502" endtime="20230410 02:25:18.505"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230410 02:25:18.507" level="INFO">${json} = [{'_id': '64339332defd2dd3121a983d', 'name': 'Test', 'lastName': 'User', 'email': 'test2@mail.com', 'phone': '888888888', 'personalId': '987654322', 'password': '$2a$08$.eJ0m6HpWX4NLKgT8NMBsuqy3XliYbH...</msg>
+<status status="PASS" starttime="20230410 02:25:18.505" endtime="20230410 02:25:18.507"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${user_id}</var>
+<arg>${json[0]}</arg>
+<arg>_id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230410 02:25:18.510" level="INFO">${user_id} = 64339332defd2dd3121a983d</msg>
+<status status="PASS" starttime="20230410 02:25:18.508" endtime="20230410 02:25:18.510"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${USER_ID}</arg>
+<arg>${user_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230410 02:25:18.511" level="INFO">${USER_ID} = 64339332defd2dd3121a983d</msg>
+<status status="PASS" starttime="20230410 02:25:18.511" endtime="20230410 02:25:18.512"/>
+</kw>
+<tag>GET</tag>
+<status status="PASS" starttime="20230410 02:25:18.191" endtime="20230410 02:25:18.512"/>
+</test>
+<test id="s1-t6" name="Test Get User By ID" line="61">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:18.516" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynzt...</msg>
+<status status="PASS" starttime="20230410 02:25:18.514" endtime="20230410 02:25:18.516"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${USERS_ENDPOINT}/${USER_ID}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:19.277" level="INFO">GET Request : url=https://fit-go-api.onrender.com/api/users/64339332defd2dd3121a983d 
+ path_url=/api/users/64339332defd2dd3121a983d 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynztHzcunft_fY'} 
+ body=None 
+ </msg>
+<msg timestamp="20230410 02:25:19.278" level="INFO">GET Response : url=https://fit-go-api.onrender.com/api/users/64339332defd2dd3121a983d 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:19 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '261', 'Connection': 'keep-alive', 'CF-Ray': '7b58918818c80de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"14c-TUjgLllUfqguWlHfN0VBt9ezGpI"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body={"_id":"64339332defd2dd3121a983d","name":"Test","lastName":"User","email":"test2@mail.com","phone":"888888888","personalId":"987654322","password":"$2a$08$.eJ0m6HpWX4NLKgT8NMBsuqy3XliYbHtgClZjCNfb627kG0Ta/5KC","roles":["user"],"subscriptions":[],"createdAt":"2023-04-10T04:40:18.533Z","updatedAt":"2023-04-10T04:40:18.533Z","__v":0} 
+ </msg>
+<msg timestamp="20230410 02:25:19.278" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:19.278" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:18.517" endtime="20230410 02:25:19.279"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230410 02:25:19.281" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:19.279" endtime="20230410 02:25:19.281"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230410 02:25:19.283" level="INFO">${json} = {'_id': '64339332defd2dd3121a983d', 'name': 'Test', 'lastName': 'User', 'email': 'test2@mail.com', 'phone': '888888888', 'personalId': '987654322', 'password': '$2a$08$.eJ0m6HpWX4NLKgT8NMBsuqy3XliYbHt...</msg>
+<status status="PASS" starttime="20230410 02:25:19.282" endtime="20230410 02:25:19.283"/>
+</kw>
+<tag>GET</tag>
+<status status="PASS" starttime="20230410 02:25:18.513" endtime="20230410 02:25:19.283"/>
+</test>
+<test id="s1-t7" name="Test Update User" line="69">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:19.287" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynzt...</msg>
+<status status="PASS" starttime="20230410 02:25:19.286" endtime="20230410 02:25:19.287"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>name=NewName</arg>
+<arg>lastName=NewLastName</arg>
+<arg>email=newemail@email.com</arg>
+<arg>phone=0987654321</arg>
+<arg>personalId=123456789</arg>
+<arg>roles=["user"]</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:19.289" level="INFO">&amp;{data} = { name=NewName | lastName=NewLastName | email=newemail@email.com | phone=0987654321 | personalId=123456789 | roles=["user"] }</msg>
+<status status="PASS" starttime="20230410 02:25:19.288" endtime="20230410 02:25:19.289"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${USERS_ENDPOINT}/${USER_ID}</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:19.627" level="INFO">PUT Request : url=https://fit-go-api.onrender.com/api/users/64339332defd2dd3121a983d 
+ path_url=/api/users/64339332defd2dd3121a983d 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynztHzcunft_fY', 'Content-Length': '150', 'Content-Type': 'application/json'} 
+ body=b'{"name": "NewName", "lastName": "NewLastName", "email": "newemail@email.com", "phone": "0987654321", "personalId": "123456789", "roles": "[\\"user\\"]"}' 
+ </msg>
+<msg timestamp="20230410 02:25:19.628" level="INFO">PUT Response : url=https://fit-go-api.onrender.com/api/users/64339332defd2dd3121a983d 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:19 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '283', 'Connection': 'keep-alive', 'CF-Ray': '7b58918cfed30de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"161-XSOlsjhZTrpa+2upK2c5/9J6Zoc"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body={"_id":"64339332defd2dd3121a983d","name":"NewName","lastName":"NewLastName","email":"newemail@email.com","phone":"0987654321","personalId":"123456789","password":"$2a$08$.eJ0m6HpWX4NLKgT8NMBsuqy3XliYbHtgClZjCNfb627kG0Ta/5KC","roles":["[\"user\"]"],"subscriptions":[],"createdAt":"2023-04-10T04:40:18.533Z","updatedAt":"2023-04-10T05:25:19.669Z","__v":0} 
+ </msg>
+<msg timestamp="20230410 02:25:19.628" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:19.628" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:19.290" endtime="20230410 02:25:19.629"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230410 02:25:19.631" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:19.629" endtime="20230410 02:25:19.631"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230410 02:25:19.633" level="INFO">${json} = {'_id': '64339332defd2dd3121a983d', 'name': 'NewName', 'lastName': 'NewLastName', 'email': 'newemail@email.com', 'phone': '0987654321', 'personalId': '123456789', 'password': '$2a$08$.eJ0m6HpWX4NLKgT8...</msg>
+<status status="PASS" starttime="20230410 02:25:19.632" endtime="20230410 02:25:19.633"/>
+</kw>
+<tag>PUT</tag>
+<status status="PASS" starttime="20230410 02:25:19.285" endtime="20230410 02:25:19.634"/>
+</test>
+<test id="s1-t8" name="Test Delete User" line="78">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230410 02:25:19.638" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynzt...</msg>
+<status status="PASS" starttime="20230410 02:25:19.637" endtime="20230410 02:25:19.638"/>
+</kw>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>FitGoAPI</arg>
+<arg>${USERS_ENDPOINT}/${USER_ID}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20230410 02:25:19.961" level="INFO">DELETE Request : url=https://fit-go-api.onrender.com/api/users/64339332defd2dd3121a983d 
+ path_url=/api/users/64339332defd2dd3121a983d 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMzOWRiYzY0ZmIwN2QwZWQ2MTExMWMiLCJyb2xlcyI6WyJbXCJ1c2VyXCJdIl0sImlhdCI6MTY4MTEwNDMxN30.jibuso1G0_7kmeQhpKrGWCoyencNpynztHzcunft_fY', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20230410 02:25:19.961" level="INFO">DELETE Response : url=https://fit-go-api.onrender.com/api/users/64339332defd2dd3121a983d 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 10 Apr 2023 05:25:20 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '63', 'Connection': 'keep-alive', 'CF-Ray': '7b58918f2a660de7-SCL', 'Content-Encoding': 'gzip', 'ETag': 'W/"27-27o4zzUjhHNmthTJyia4gBCjpos"', 'Vary': 'Accept-Encoding', 'CF-Cache-Status': 'DYNAMIC', 'x-powered-by': 'Express', 'x-render-origin-server': 'Render', 'Server': 'cloudflare', 'alt-svc': 'h3=":443"; ma=86400, h3-29=":443"; ma=86400'} 
+ body={"message":"User deleted successfully"} 
+ </msg>
+<msg timestamp="20230410 02:25:19.961" level="INFO">/Users/daniloorrego/Library/Python/3.10/lib/python/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fit-go-api.onrender.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230410 02:25:19.962" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:19.639" endtime="20230410 02:25:19.962"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230410 02:25:19.964" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230410 02:25:19.963" endtime="20230410 02:25:19.965"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230410 02:25:19.967" level="INFO">${json} = {'message': 'User deleted successfully'}</msg>
+<status status="PASS" starttime="20230410 02:25:19.966" endtime="20230410 02:25:19.968"/>
+</kw>
+<tag>DELETE</tag>
+<status status="PASS" starttime="20230410 02:25:19.635" endtime="20230410 02:25:19.970"/>
+</test>
+<status status="FAIL" starttime="20230410 02:25:15.277" endtime="20230410 02:25:19.972"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">DELETE</stat>
+<stat pass="2" fail="0" skip="0">GET</stat>
+<stat pass="2" fail="2" skip="0">POST</stat>
+<stat pass="1" fail="0" skip="0">PUT</stat>
+</tag>
+<suite>
+<stat pass="6" fail="2" skip="0" id="s1" name="User Management Tests">User Management Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
