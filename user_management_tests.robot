@@ -24,10 +24,9 @@ Test User Registration With Valid Data
 Test User Registration With Invalid Data
     [Tags]  POST
     &{data}=  Create Dictionary  name=  lastName=  email=  password=  phone=  personalId=  roles=[]
-    ${response}=  POST On Session  FitGoAPI  ${REGISTER_ENDPOINT}  json=${data}
-    Should Be Equal As Strings  ${response.status_code}  400
+    ${response}=  POST On Session  FitGoAPI  ${REGISTER_ENDPOINT}  json=${data}  expected_status=400
     ${json}=  Set Variable  ${response.json()}
-    # Add appropriate assertions based on your API response structure
+    Should Be Equal As Strings  ${json["error"]}  Some fields are empty
 
 Test User Login With Valid Credentials
     [Tags]  POST
@@ -42,8 +41,7 @@ Test User Login With Valid Credentials
 Test User Login With Invalid Credentials
     [Tags]  POST
     &{data}=  Create Dictionary  email=${EMAIL}  password=wrongPass
-    ${response}=  POST On Session  FitGoAPI  ${LOGIN_ENDPOINT}  json=${data}
-    Should Be Equal As Strings  ${response.status_code}  401
+    ${response}=  POST On Session  FitGoAPI  ${LOGIN_ENDPOINT}  json=${data}  expected_status=401
     ${json}=  Set Variable  ${response.json()}
     # Add appropriate assertions based on your API response structure
 

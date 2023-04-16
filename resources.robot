@@ -3,7 +3,8 @@ Library          Collections
 Library          RequestsLibrary
 
 *** Variables ***
-${BASE_URL}           https://fit-go-api.onrender.com/api
+${BASE_URL}           http://localhost:3000/api
+# ${BASE_URL}           https://fit-go-api.onrender.com/api
 ${GYMS_ENDPOINT}      /gyms
 ${LOGIN_ENDPOINT}     /users/login
 
