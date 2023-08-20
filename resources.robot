@@ -14,7 +14,7 @@ Create Sessions
     Get FitGo token
 
 Get FitGo token
-    &{data}=  Create Dictionary  email=robot@test.com  password=Password123
+    &{data}=  Create Dictionary  email=testing@email.com  password=testpassword
     ${response}=  POST On Session  FitGoAPI  ${LOGIN_ENDPOINT}  json=${data}
     Should Be Equal As Strings  ${response.status_code}  200
     ${json}=  Set Variable  ${response.json()}

@@ -76,8 +76,26 @@ Test Update User
 Test Delete User
     [Tags]  DELETE
     ${headers}=  Create Dictionary  Authorization=Bearer ${TOKEN}
+    # Fetch user's ID
+    Get User ID  ${headers}
     ${response}=  DELETE On Session  FitGoAPI  ${USERS_ENDPOINT}/${USER_ID}  headers=${headers}
     Should Be Equal As Strings  ${response.status_code}  200
     ${json}=  Set Variable  ${response.json()}
     # Add appropriate assertions based on your API response structure
 
+*** Keywords ***
+Get User ID
+    [Arguments]  ${headers}
+    ${all_users_response}=  GET On Session  FitGoAPI  ${USERS_ENDPOINT}  headers=${headers}
+    ${all_users_json}=  Set Variable  ${all_users_response.json()}
+    # Assuming the response is an array of users, get the ID of the first user that's not the test user
+    ${new_user_id}=  Set Variable  ${EMPTY}
+    FOR  ${user}  IN  @{all_users_json}
+        ${current_email}=  Get From Dictionary  ${user}  email
+        IF  '${current_email}' != 'testing@email.com'
+            ${new_user_id}=  Get From Dictionary  ${user}  _id
+            Exit For Loop
+        END
+    END
+    Should Not Be Empty  ${new_user_id}  No other user found for deletion
+    Set Suite Variable  ${USER_ID}  ${new_user_id}
